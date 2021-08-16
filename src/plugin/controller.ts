@@ -1,7 +1,7 @@
 figma.showUI(__html__);
 
 figma.ui.onmessage = (msg) => {
-    if (msg.type === 'create-rectangles') {
+    if (msg.type === 'fill-with-data') {
         const nodes = [];
 
         for (let i = 0; i < msg.count; i++) {

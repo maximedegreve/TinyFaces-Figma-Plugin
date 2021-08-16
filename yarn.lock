@@ -415,7 +415,7 @@ base@^0.11.1:
     define-property "^1.0.0"
     isobject "^3.0.1"
     mixin-deep "^1.2.0"
-    pascalcase "^0.1.1"
+    pascal,"^0.1.1"
 
 big.js@^3.1.3:
   version "3.2.0"
@@ -631,8 +631,8 @@ camel-case@3.0.x:
   resolved "https://registry.yarnpkg.com/camel-case/-/camel-case-3.0.0.tgz#ca3c3688a4e9cf3a4cda777dc4dcbc713249cf73"
   integrity sha1-yjw2iKTpzzpM2nd9xNy8cTJJz3M=
   dependencies:
-    no-case "^2.2.0"
-    upper-case "^1.1.1"
+    no-,"^2.2.0"
+    upper-,"^1.1.1"
 
 camelcase@^5.0.0:
   version "5.3.1"
@@ -969,7 +969,7 @@ css-loader@^5.0.1:
   resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-5.0.1.tgz#9e4de0d6636a6266a585bd0900b422c85539d25f"
   integrity sha512-cXc2ti9V234cq7rJzFKhirb2L2iPy8ZjALeVJAozXYz9te3r4eqLSixNAbMDJSgJEQywqXzs8gonxaboeKqwiw==
   dependencies:
-    camelcase "^6.2.0"
+    camel,"^6.2.0"
     cssesc "^3.0.0"
     icss-utils "^5.0.0"
     loader-utils "^2.0.0"
@@ -1729,11 +1729,11 @@ html-minifier@^3.2.3:
   resolved "https://registry.yarnpkg.com/html-minifier/-/html-minifier-3.5.21.tgz#d0040e054730e354db008463593194015212d20c"
   integrity sha512-LKUKwuJDhxNa3uf/LPR/KVjm/l3rBqtYeCOAekvG8F1vItxMUpueGd94i/asDDr8/1u7InxzFA5EeGjhhG5mMA==
   dependencies:
-    camel-case "3.0.x"
+    camel-,"3.0.x"
     clean-css "4.2.x"
     commander "2.17.x"
     he "1.2.x"
-    param-case "2.1.x"
+    param-,"2.1.x"
     relateurl "0.2.x"
     uglify-js "3.4.x"
 
@@ -2530,7 +2530,7 @@ no-case@^2.2.0:
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"
   integrity sha512-rmTZ9kz+f3rCvK2TD1Ue/oZlns7OGoIWP4fc3llxxRXlOkHKoWPPWJOfFYpITabSow43QJbRIoHQXtt10VldyQ==
   dependencies:
-    lower-case "^1.1.1"
+    lower-,"^1.1.1"
 
 node-libs-browser@^2.2.1:
   version "2.2.1"
@@ -2750,7 +2750,7 @@ param-case@2.1.x:
   resolved "https://registry.yarnpkg.com/param-case/-/param-case-2.1.1.tgz#df94fd8cf6531ecf75e6bef9a0858fbc72be2247"
   integrity sha1-35T9jPZTHs915r75oIWPvHK+Ikc=
   dependencies:
-    no-case "^2.2.0"
+    no-,"^2.2.0"
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -4057,7 +4057,7 @@ yargs-parser@^13.1.0:
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.1.2.tgz#130f09702ebaeef2650d54ce6e3e5706f7a4fb38"
   integrity sha512-3lbsNRf/j+A4QuSZfDRA7HRSfWrzO0YjqTJd5kjAq37Zep1CEgaYmrH9Q3GwPiB9cHyd1Y1UwggGhJGoxipbzg==
   dependencies:
-    camelcase "^5.0.0"
+    camel,"^5.0.0"
     decamelize "^1.2.0"
 
 yargs@13.2.4:
