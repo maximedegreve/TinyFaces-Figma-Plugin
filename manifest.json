@@ -3,5 +3,18 @@
     "id": "00000000",
     "api": "1.0.0",
     "main": "dist/code.js",
-    "ui": "dist/ui.html"
+    "ui": "dist/ui.html",
+    "menu": [
+        {"name": "Fill with high quality", "command": "fill-high-quality"},
+        {"name": "Fill with low quality", "command": "fill-low-quality"},
+        {"separator": true},
+        {
+            "name": "Fill with (filtered)",
+            "menu": [
+                {"name": "Male", "command": "fill-male"},
+                {"name": "Female", "command": "fill-female"},
+                {"name": "Non-Binary", "command": "fill-non-binary"}
+            ]
+        }
+    ]
 }
