@@ -1,14 +1,14 @@
 import {GenderType} from '../api/GenderType';
-import {ItemType} from '../api/ItemType';
 
 figma.showUI(__html__, {visible: false});
+
 figma.ui.onmessage = (msg) => {
     if (msg.type === 'launch-plugin') {
         launchPlugin();
     }
 
     if (msg.type === 'fill-with-data') {
-        fillWithData(msg.items);
+        fillWithData(msg.data, msg.targetId);
     }
 
     if (msg.type === 'failed') {
@@ -48,22 +48,9 @@ function fetchAndFill(quality: number, limit: number, gender?: GenderType) {
     });
 }
 
-function fillWithData(items: Array<ItemType>) {
-    console.log(items);
-    const nodes = [];
-
-    for (let i = 0; i < 5; i++) {
-        const rect = figma.createRectangle();
-        rect.x = i * 150;
-        rect.fills = [{type: 'SOLID', color: {r: 1, g: 0.5, b: 0}}];
-        figma.currentPage.appendChild(rect);
-        nodes.push(rect);
-    }
-
-    figma.currentPage.selection = nodes;
-
-    console.log('🤲');
-
+function fillWithData(data: Uint8Array, targetId: string) {
+    const layer = figma.root.findOne((n) => n.id === targetId);
+    console.log(layer);
     closePlugin();
 }
 
