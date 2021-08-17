@@ -1,21 +1,17 @@
 import {ItemType} from './ItemType';
 
-type JSONResponse = {
-    data?: Array<ItemType>;
-    errors?: Array<{message: string}>;
-};
+type JSONResponse = Array<ItemType>;
 
-export async function fetchData(quality: number, limit: number): Promise<Array<ItemType>> {
-    var url = new URL('https://tinyfac.es/api/data');
-    const params = {quality: quality, limit: limit};
-    Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]));
+export async function fetchData({quality = 10, limit = 20}): Promise<Array<ItemType>> {
+    const url = `https://tinyfac.es/api/data?quality=${quality}&limit=${limit}`;
 
-    const response = await fetch(url.toString());
-    const {data, errors}: JSONResponse = await response.json();
+    const response = await fetch(url);
+
+    const items: JSONResponse = await response.json();
 
     if (response.ok) {
-        return data;
+        return items;
     } else {
-        return Promise.reject(errors);
+        return Promise.reject();
     }
 }
