@@ -1,9 +1,14 @@
 import {ItemType} from './ItemType';
+import {GenderType} from './GenderType';
 
 type JSONResponse = Array<ItemType>;
 
-export async function fetchData({quality = 10, limit = 20}): Promise<Array<ItemType>> {
-    const url = `https://tinyfac.es/api/data?quality=${quality}&limit=${limit}`;
+export async function fetchData(quality = 10, limit = 20, gender?: GenderType): Promise<Array<ItemType>> {
+    var url = `https://tinyfac.es/api/data?quality=${quality}&limit=${limit}`;
+
+    if (gender) {
+        url = url + '&gender=' + gender;
+    }
 
     const response = await fetch(url);
 
