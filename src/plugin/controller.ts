@@ -19,38 +19,42 @@ figma.ui.onmessage = (msg) => {
 function launchPlugin() {
     switch (figma.command) {
         case 'fill-high-quality':
-            fetchAndFill(10, 20);
+            fetchAndFill(10);
             break;
 
         case 'fill-low-quality':
-            fetchAndFill(0, 20);
+            fetchAndFill(0);
             break;
 
         case 'fill-male':
-            fetchAndFill(0, 20, GenderType.Male);
+            fetchAndFill(0, GenderType.Male);
             break;
 
         case 'fill-female':
-            fetchAndFill(0, 20, GenderType.Female);
+            fetchAndFill(0, GenderType.Female);
             break;
 
         case 'fill-non-binary':
-            fetchAndFill(0, 20);
+            fetchAndFill(0);
             break;
         default:
     }
 }
 
-function fetchAndFill(quality: number, limit: number, gender?: GenderType) {
+function fetchAndFill(quality: number, gender?: GenderType) {
+    const ids = figma.currentPage.selection.filter((n) => n.type === 'RECTANGLE').map((node) => node.id);
+
     figma.ui.postMessage({
         type: 'fetch-and-fill',
-        message: {quality: quality, limit: limit, gender: gender},
+        message: {quality: quality, limit: ids.length, gender: gender, targetIds: ids},
     });
 }
 
 function fillWithData(data: Uint8Array, targetId: string) {
     const layer = figma.root.findOne((n) => n.id === targetId);
     console.log(layer);
+    console.log(data);
+    console.log(targetId);
     closePlugin();
 }
 

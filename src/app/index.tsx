@@ -5,18 +5,18 @@ import {ItemType} from '../api/ItemType';
 window.onmessage = (event: any) => {
     const {type, message} = event.data.pluginMessage;
     if (type === 'fetch-and-fill') {
-        fetchAndFill(message.quality, message.limit, message.gender);
+        fetchAndFill(message.quality, message.limit, message.gender, message.targetIds);
     }
 };
 
-function fetchAndFill(quality: number, limit: number, gender: GenderType) {
+function fetchAndFill(quality: number, limit: number, gender: GenderType, targetIds: Array<string>) {
     fetchData(quality, limit, gender)
-        .then((items) => fetchImages(items))
+        .then((items) => fetchImages(items, targetIds))
         .catch((errors) => parent.postMessage({pluginMessage: {type: 'failed', errors: errors}}, '*'));
 }
 
-function fetchImages(items: Array<ItemType>) {
-    items.forEach((item) => fetchImageFromURLAndReplace(item.url, '123'));
+function fetchImages(items: Array<ItemType>, targetIds: Array<string>) {
+    items.forEach((item, index) => fetchImageFromURLAndReplace(item.url, targetIds[index]));
     parent.postMessage({pluginMessage: {type: 'fill-layer-with-data', items: items}}, '*');
 }
 
@@ -25,8 +25,6 @@ function fetchImageFromURLAndReplace(url: string, targetID: string) {
     fetch(url)
         .then((r) => {
             try {
-                console.log('fetch image done');
-
                 return r.arrayBuffer();
             } catch (error) {
                 console.error(error);
@@ -34,7 +32,7 @@ function fetchImageFromURLAndReplace(url: string, targetID: string) {
         })
         .then((a) =>
             parent.postMessage(
-                {pluginMessage: {type: 'fill-with-data', data: new Uint8Array(a), targetID: targetID}},
+                {pluginMessage: {type: 'fill-with-data', data: new Uint8Array(a), targetId: targetID}},
                 '*'
             )
         );
