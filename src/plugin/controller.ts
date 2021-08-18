@@ -12,8 +12,7 @@ figma.ui.onmessage = (msg) => {
     }
 
     if (msg.type === 'failed') {
-        showNotification('Something went wrong 😥');
-        closePlugin();
+        closePlugin('Something went wrong 😥');
     }
 
     if (msg.type === 'close') {
@@ -59,9 +58,12 @@ function fetchAndFill(quality: number, gender?: GenderType) {
         )
         .map((node) => node.id);
 
+    if (ids.length > 50) {
+        closePlugin(`🚨 You can't select more than 50 layers at a time right now.`);
+    }
+
     if (ids.length === 0) {
-        showNotification('🚨 Select at least one or more Frame, Rectangle, Ellipse, Polygon, Star or Vector layer(s)');
-        closePlugin();
+        closePlugin('🚨 Select at least one or more Frame, Rectangle, Ellipse, Polygon, Star or Vector layer(s)');
     }
 
     figma.ui.postMessage({
@@ -89,6 +91,6 @@ function showNotification(message: string) {
     figma.notify(message);
 }
 
-function closePlugin() {
-    figma.closePlugin();
+function closePlugin(message?: string) {
+    figma.closePlugin(message);
 }
