@@ -1,15 +1,12 @@
 # TinyFaces 👦🏼👨🏾👩🏻 Figma Plugin
 
-Fill layers in Sketch with avatars & random data from [tinyfac.es](https://tinyfac.es/)...
+Fill layers in Figma with avatars & random data from [tinyfac.es](https://tinyfac.es/)...
 
 **Features:**
 
--   📒 Fills text layers with random names
 -   👦🏼 Fills shapes with random avatar stock photos
--   👨‍👩‍👧‍👦 Supports groups
--   💟 Supports symbols
 -   🎚 Choose between high quality or low quality images
--   💑 Filter to only male or female
+-   💑 Filter to male, female or non-binary
 
 This template contains the react example as shown on [Figma Docs](https://www.figma.com/plugin-docs/intro/), with some structural changes and extra tooling.
 
