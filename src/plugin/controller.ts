@@ -23,7 +23,7 @@ figma.ui.onmessage = (msg) => {
 function launchPlugin() {
     switch (figma.command) {
         case 'fill-high-quality':
-            fetchAndFill(10);
+            fetchAndFill(8);
             break;
 
         case 'fill-low-quality':
