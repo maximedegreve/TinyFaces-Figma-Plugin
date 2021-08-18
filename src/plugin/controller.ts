@@ -13,6 +13,7 @@ figma.ui.onmessage = (msg) => {
 
     if (msg.type === 'failed') {
         showNotification('Something went wrong 😥');
+        closePlugin();
     }
 
     if (msg.type === 'close') {
@@ -46,7 +47,22 @@ function launchPlugin() {
 }
 
 function fetchAndFill(quality: number, gender?: GenderType) {
-    const ids = figma.currentPage.selection.filter((n) => n.type === 'RECTANGLE').map((node) => node.id);
+    const ids = figma.currentPage.selection
+        .filter(
+            (node) =>
+                node.type === 'FRAME' ||
+                node.type === 'ELLIPSE' ||
+                node.type === 'POLYGON' ||
+                node.type === 'RECTANGLE' ||
+                node.type === 'STAR' ||
+                node.type === 'VECTOR'
+        )
+        .map((node) => node.id);
+
+    if (ids.length === 0) {
+        showNotification('🚨 Select at least one or more Frame, Rectangle, Ellipse, Polygon, Star or Vector layer(s)');
+        closePlugin();
+    }
 
     figma.ui.postMessage({
         type: 'fetch-and-fill',
