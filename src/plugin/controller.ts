@@ -12,7 +12,7 @@ figma.ui.onmessage = (msg) => {
     }
 
     if (msg.type === 'failed') {
-        closePlugin('Something went wrong 😥');
+        closePlugin(`⚠️ TinyFaces can't be contacted. Check your internet...`);
     }
 
     if (msg.type === 'close') {
