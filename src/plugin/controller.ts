@@ -14,6 +14,10 @@ figma.ui.onmessage = (msg) => {
     if (msg.type === 'failed') {
         showNotification('Something went wrong 😥');
     }
+
+    if (msg.type === 'close') {
+        closePlugin();
+    }
 };
 
 function launchPlugin() {
@@ -50,17 +54,25 @@ function fetchAndFill(quality: number, gender?: GenderType) {
     });
 }
 
-function fillWithData(data: Uint8Array, targetId: string) {
-    const layer = figma.root.findOne((n) => n.id === targetId);
-    console.log(layer);
-    console.log(data);
-    console.log(targetId);
-    closePlugin();
+async function fillWithData(data: Uint8Array, targetId: string) {
+    const node = figma.currentPage.findOne((n) => n.id === targetId);
+    if (
+        node.type === 'FRAME' ||
+        node.type === 'ELLIPSE' ||
+        node.type === 'POLYGON' ||
+        node.type === 'RECTANGLE' ||
+        node.type === 'STAR' ||
+        node.type === 'VECTOR'
+    ) {
+        const image = figma.createImage(data);
+        node.fills = [{type: 'IMAGE', imageHash: image.hash, scaleMode: 'FILL'}];
+    }
 }
 
 function showNotification(message: string) {
     figma.notify(message);
 }
+
 function closePlugin() {
     figma.closePlugin();
 }

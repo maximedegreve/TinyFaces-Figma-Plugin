@@ -16,26 +16,20 @@ function fetchAndFill(quality: number, limit: number, gender: GenderType, target
 }
 
 function fetchImages(items: Array<ItemType>, targetIds: Array<string>) {
-    items.forEach((item, index) => fetchImageFromURLAndReplace(item.url, targetIds[index]));
-    parent.postMessage({pluginMessage: {type: 'fill-layer-with-data', items: items}}, '*');
+    const actions = items.map((item, index) => fetchImageFromURLAndReplace(item.url, targetIds[index]));
+    Promise.all(actions).then(() => parent.postMessage({pluginMessage: {type: 'close'}}, '*'));
 }
 
-function fetchImageFromURLAndReplace(url: string, targetID: string) {
-    console.log('fetch image');
-    fetch(url)
-        .then((r) => {
-            try {
-                return r.arrayBuffer();
-            } catch (error) {
-                console.error(error);
-            }
-        })
-        .then((a) =>
-            parent.postMessage(
-                {pluginMessage: {type: 'fill-with-data', data: new Uint8Array(a), targetId: targetID}},
-                '*'
-            )
+async function fetchImageFromURLAndReplace(url: string, targetID: string): Promise<void> {
+    const response = await fetch(url);
+
+    if (response.ok) {
+        const buffer = await response.arrayBuffer();
+        parent.postMessage(
+            {pluginMessage: {type: 'fill-with-data', data: new Uint8Array(buffer), targetId: targetID}},
+            '*'
         );
+    }
 }
 
 parent.postMessage({pluginMessage: {type: 'launch-plugin'}}, '*');
