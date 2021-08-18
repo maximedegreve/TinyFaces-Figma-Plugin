@@ -87,10 +87,6 @@ async function fillWithData(data: Uint8Array, targetId: string) {
     }
 }
 
-function showNotification(message: string) {
-    figma.notify(message);
-}
-
 function closePlugin(message?: string) {
     figma.closePlugin(message);
 }
