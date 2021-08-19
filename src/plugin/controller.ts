@@ -1,5 +1,6 @@
 import {GenderType} from '../api/GenderType';
 import {setCharacters} from '@figma-plugin/helpers';
+import {ItemType} from '../api/ItemType';
 
 figma.showUI(__html__, {visible: false});
 
@@ -8,12 +9,8 @@ figma.ui.onmessage = (msg) => {
         launchPlugin();
     }
 
-    if (msg.type === 'fill-with-data') {
-        fillWithData(msg.data, msg.targetId);
-    }
-
-    if (msg.type === 'fill-with-text') {
-        fillWithText(msg.text, msg.targetId);
+    if (msg.type === 'fill-and-close') {
+        fillAndClose(msg.items, msg.idsShapes, msg.idsText, msg.images);
     }
 
     if (msg.type === 'failed') {
@@ -82,14 +79,37 @@ function fetchAndFill(quality: number, gender?: GenderType) {
     });
 }
 
-async function fillWithText(text: string, targetId: string) {
+function fillAndClose(
+    items: Array<ItemType>,
+    idsShapes: Array<string>,
+    idsText: Array<string>,
+    images: Array<Uint8Array>
+) {
+    // Fill Images (Sync)
+    idsShapes.slice(0, images.length).forEach((id, index) => {
+        fillWithData(images[index], id);
+    });
+
+    // Fill Text (Async)
+    const fillText = idsText
+        .slice(0, items.length)
+        .map((id, index) => fillWithText(`${items[index].first_name} ${items[index].last_name}`, id));
+
+    Promise.all(fillText).then(() => {
+        closePlugin();
+    });
+}
+
+async function fillWithText(text: string, targetId: string): Promise<boolean> {
+    console.log('fillWithText');
     const node = figma.currentPage.findOne((n) => n.id === targetId);
     if (node.type === 'TEXT') {
-        setCharacters(node, text);
+        const result = await setCharacters(node, text);
+        return result;
     }
 }
 
-async function fillWithData(data: Uint8Array, targetId: string) {
+function fillWithData(data: Uint8Array, targetId: string) {
     const node = figma.currentPage.findOne((n) => n.id === targetId);
     if (
         node.type === 'FRAME' ||

@@ -18,20 +18,22 @@ function fetchAndFill(
 ) {
     fetchData(quality, limit, gender)
         .then((items) => {
-            fetchAndFillImages(items, idsShapes);
-            fillText(items, idsText);
+            fetchImagesAndFill(items, idsShapes, idsText);
         })
         .catch((errors) => parent.postMessage({pluginMessage: {type: 'failed', errors: errors}}, '*'));
 }
 
-function fillText(items: Array<ItemType>, idsText: Array<string>) {
-    items.forEach((item, index) =>
+function fetchImagesAndFill(items: Array<ItemType>, idsShapes: Array<string>, idsText: Array<string>) {
+    const imageActions = items.slice(0, idsShapes.length).map((item) => fetchImageFromURL(item.url));
+    Promise.all(imageActions).then((imageBuffers) =>
         parent.postMessage(
             {
                 pluginMessage: {
-                    type: 'fill-with-text',
-                    text: `${item.first_name} ${item.last_name}`,
-                    targetId: idsText[index],
+                    type: 'fill-and-close',
+                    items: items,
+                    idsShapes: idsShapes,
+                    idsText: idsText,
+                    images: imageBuffers,
                 },
             },
             '*'
@@ -39,20 +41,12 @@ function fillText(items: Array<ItemType>, idsText: Array<string>) {
     );
 }
 
-function fetchAndFillImages(items: Array<ItemType>, idsShapes: Array<string>) {
-    const actions = items.map((item, index) => fetchImageFromURLAndReplace(item.url, idsShapes[index]));
-    Promise.all(actions).then(() => parent.postMessage({pluginMessage: {type: 'close'}}, '*'));
-}
-
-async function fetchImageFromURLAndReplace(url: string, targetID: string): Promise<void> {
+async function fetchImageFromURL(url: string): Promise<ArrayBuffer> {
     const response = await fetch(url);
 
     if (response.ok) {
         const buffer = await response.arrayBuffer();
-        parent.postMessage(
-            {pluginMessage: {type: 'fill-with-data', data: new Uint8Array(buffer), targetId: targetID}},
-            '*'
-        );
+        return new Uint8Array(buffer);
     }
 }
 
