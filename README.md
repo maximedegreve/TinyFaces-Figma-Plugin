@@ -18,7 +18,7 @@ Fill layers in Figma with avatars & random data from [tinyfac.es](https://tinyfa
 -   Right click `Plugins` -> `TinyFaces` -> `Fill with high quality`
 -   🎉🤩🥰
 
-## Quickstart
+## Development
 
 This template contains the react example as shown on [Figma Docs](https://www.figma.com/plugin-docs/intro/), with some structural changes and extra tooling.
 
