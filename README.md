@@ -10,7 +10,7 @@ Fill layers in Figma with avatars & random data from [tinyfac.es](https://tinyfa
 -   💑 Filter to male, female or non-binary
 -   👨‍👩‍👧‍👦 Supports components
 
-**Installation:**
+**Installation/Usage:**
 
 -   [Visit the Figma plugin page](https://www.figma.com/community/plugin/1009744160501872848/TinyFaces)
 -   Click Install
