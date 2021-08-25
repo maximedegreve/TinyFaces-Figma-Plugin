@@ -4,13 +4,23 @@ Fill layers in Figma with avatars & random data from [tinyfac.es](https://tinyfa
 
 **Features:**
 
+-   📒 Fills text layers with random names
 -   👦🏼 Fills shapes with random avatar stock photos
 -   🎚 Choose between high quality or low quality images
 -   💑 Filter to male, female or non-binary
+-   👨‍👩‍👧‍👦 Supports components
+
+**Installation/Usage:**
+
+-   [Visit the Figma plugin page](https://www.figma.com/community/plugin/1009744160501872848)
+-   Click Install
+-   Select a few `text` and `shape (rectangle, ellipse, polygon, start, vector)` layers
+-   Right click `Plugins` -> `TinyFaces` -> `Fill with high quality`
+-   🎉🤩🥰
+
+## Development
 
 This template contains the react example as shown on [Figma Docs](https://www.figma.com/plugin-docs/intro/), with some structural changes and extra tooling.
-
-## Quickstart
 
 -   Run `yarn` to install dependencies.
 -   Run `yarn build:watch` to start webpack in watch mode.

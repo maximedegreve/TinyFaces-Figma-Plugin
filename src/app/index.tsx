@@ -5,30 +5,48 @@ import {ItemType} from '../api/ItemType';
 window.onmessage = (event: any) => {
     const {type, message} = event.data.pluginMessage;
     if (type === 'fetch-and-fill') {
-        fetchAndFill(message.quality, message.limit, message.gender, message.targetIds);
+        fetchAndFill(message.quality, message.limit, message.gender, message.idsShapes, message.idsText);
     }
 };
 
-function fetchAndFill(quality: number, limit: number, gender: GenderType, targetIds: Array<string>) {
+function fetchAndFill(
+    quality: number,
+    limit: number,
+    gender: GenderType,
+    idsShapes: Array<string>,
+    idsText: Array<string>
+) {
     fetchData(quality, limit, gender)
-        .then((items) => fetchImages(items, targetIds))
+        .then((items) => {
+            fetchImagesAndFill(items, idsShapes, idsText);
+        })
         .catch((errors) => parent.postMessage({pluginMessage: {type: 'failed', errors: errors}}, '*'));
 }
 
-function fetchImages(items: Array<ItemType>, targetIds: Array<string>) {
-    const actions = items.map((item, index) => fetchImageFromURLAndReplace(item.url, targetIds[index]));
-    Promise.all(actions).then(() => parent.postMessage({pluginMessage: {type: 'close'}}, '*'));
+function fetchImagesAndFill(items: Array<ItemType>, idsShapes: Array<string>, idsText: Array<string>) {
+    const imageActions = items.slice(0, idsShapes.length).map((item) => fetchImageFromURL(item.url));
+    Promise.all(imageActions).then((imageBuffers) =>
+        parent.postMessage(
+            {
+                pluginMessage: {
+                    type: 'fill-and-close',
+                    items: items,
+                    idsShapes: idsShapes,
+                    idsText: idsText,
+                    images: imageBuffers,
+                },
+            },
+            '*'
+        )
+    );
 }
 
-async function fetchImageFromURLAndReplace(url: string, targetID: string): Promise<void> {
+async function fetchImageFromURL(url: string): Promise<ArrayBuffer> {
     const response = await fetch(url);
 
     if (response.ok) {
         const buffer = await response.arrayBuffer();
-        parent.postMessage(
-            {pluginMessage: {type: 'fill-with-data', data: new Uint8Array(buffer), targetId: targetID}},
-            '*'
-        );
+        return new Uint8Array(buffer);
     }
 }
 

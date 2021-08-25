@@ -1,4 +1,6 @@
 import {GenderType} from '../api/GenderType';
+import {setCharacters} from '@figma-plugin/helpers';
+import {ItemType} from '../api/ItemType';
 
 figma.showUI(__html__, {visible: false});
 
@@ -7,8 +9,8 @@ figma.ui.onmessage = (msg) => {
         launchPlugin();
     }
 
-    if (msg.type === 'fill-with-data') {
-        fillWithData(msg.data, msg.targetId);
+    if (msg.type === 'fill-and-close') {
+        fillAndClose(msg.items, msg.idsShapes, msg.idsText, msg.images);
     }
 
     if (msg.type === 'failed') {
@@ -46,7 +48,7 @@ function launchPlugin() {
 }
 
 function fetchAndFill(quality: number, gender?: GenderType) {
-    const ids = figma.currentPage.selection
+    const idsShapes = figma.currentPage.selection
         .filter(
             (node) =>
                 node.type === 'FRAME' ||
@@ -54,25 +56,60 @@ function fetchAndFill(quality: number, gender?: GenderType) {
                 node.type === 'POLYGON' ||
                 node.type === 'RECTANGLE' ||
                 node.type === 'STAR' ||
+                node.type === 'TEXT' ||
                 node.type === 'VECTOR'
         )
         .map((node) => node.id);
 
-    if (ids.length > 50) {
+    const idsText = figma.currentPage.selection.filter((node) => node.type === 'TEXT').map((node) => node.id);
+
+    if (idsShapes.length > 50 || idsText.length > 50) {
         closePlugin(`🚨 You can't select more than 50 layers at a time right now.`);
     }
 
-    if (ids.length === 0) {
-        closePlugin('🚨 Select at least one or more Frame, Rectangle, Ellipse, Polygon, Star or Vector layer(s)');
+    if (idsShapes.length === 0 && idsText.length === 0) {
+        closePlugin('🚨 Select at least one or more Frame, Rectangle, Text, Ellipse, Polygon, Star or Vector layer(s)');
     }
+
+    const limit = Math.max(idsText.length, idsShapes.length);
 
     figma.ui.postMessage({
         type: 'fetch-and-fill',
-        message: {quality: quality, limit: ids.length, gender: gender, targetIds: ids},
+        message: {quality: quality, limit: limit, gender: gender, idsShapes: idsShapes, idsText: idsText},
     });
 }
 
-async function fillWithData(data: Uint8Array, targetId: string) {
+function fillAndClose(
+    items: Array<ItemType>,
+    idsShapes: Array<string>,
+    idsText: Array<string>,
+    images: Array<Uint8Array>
+) {
+    // Fill Images (Sync)
+    idsShapes.slice(0, images.length).forEach((id, index) => {
+        fillWithData(images[index], id);
+    });
+
+    // Fill Text (Async)
+    const fillText = idsText
+        .slice(0, items.length)
+        .map((id, index) => fillWithText(`${items[index].first_name} ${items[index].last_name}`, id));
+
+    Promise.all(fillText).then(() => {
+        closePlugin();
+    });
+}
+
+async function fillWithText(text: string, targetId: string): Promise<boolean> {
+    console.log('fillWithText');
+    const node = figma.currentPage.findOne((n) => n.id === targetId);
+    if (node.type === 'TEXT') {
+        const result = await setCharacters(node, text);
+        return result;
+    }
+}
+
+function fillWithData(data: Uint8Array, targetId: string) {
     const node = figma.currentPage.findOne((n) => n.id === targetId);
     if (
         node.type === 'FRAME' ||
