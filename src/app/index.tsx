@@ -8,7 +8,7 @@ window.onmessage = (event: any) => {
         fetchAndFill(message.quality, message.limit, message.gender, message.idsShapes, message.idsText);
     }
     if (type === 'fetch-and-fill-ai') {
-        fetchAndFillAI(message.quality, message.limit, message.gender, message.idsShapes, message.idsText);
+        fetchAndFillAI(message.limit, message.gender, message.idsShapes, message.idsText);
     }
     if (type === 'open-url') {
         openUrl(message.url);

@@ -22,7 +22,7 @@ export async function fetchData(quality = 10, limit = 20, gender?: GenderType): 
 }
 
 export async function fetchAIData(limit = 20, gender?: GenderType): Promise<Array<ItemType>> {
-    var url = `https://tinyfac.es/api/data-ai?quality=limit=${limit}`;
+    var url = `https://tinyfac.es/api/data-ai?limit=${limit}`;
 
     if (gender) {
         url = url + '&gender=' + gender;
