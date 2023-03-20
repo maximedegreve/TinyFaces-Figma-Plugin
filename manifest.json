@@ -15,7 +15,7 @@
                 {"name": "👱 Non-Binary", "command": "fill-non-binary-ai"}
             ]
         },
-        {"name": "🔖 License (commerical)", "command": "license-ai"},
+        {"name": "🔖 Get a license (commerical)", "command": "license-ai"},
         {"separator": true},
         {
             "name": "💀 Deprecated (non-commerical)...",
