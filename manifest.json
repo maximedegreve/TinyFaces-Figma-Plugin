@@ -6,9 +6,9 @@
     "ui": "dist/ui.html",
     "editorType": ["figma"],
     "menu": [
-        {"name": "👪 Fill with avatars/names", "command": "fill-ai"},
+        {"name": "👪 Fill with avatars/names (ai)", "command": "fill-ai"},
         {
-            "name": "🪄 Fill with...",
+            "name": "🪄 Fill with (ai)...",
             "menu": [
                 {"name": "🧔‍♂️ Male", "command": "fill-male-ai"},
                 {"name": "👩 Female", "command": "fill-female-ai"},

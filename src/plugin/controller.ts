@@ -63,11 +63,11 @@ function launchPlugin() {
             break;
 
         case 'license':
-            openUrl('https://tinyfac.es/license/commercial');
+            openUrl('https://tinyfac.es/license/non-commercial');
             break;
 
         case 'license-ai':
-            openUrl('https://tinyfac.es/license/non-commercial');
+            openUrl('https://tinyfac.es/dashboard');
             break;
 
         default:
