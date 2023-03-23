@@ -4,16 +4,33 @@
     "api": "1.0.0",
     "main": "dist/code.js",
     "ui": "dist/ui.html",
+    "editorType": ["figma"],
     "menu": [
-        {"name": "Fill with high quality", "command": "fill-high-quality"},
-        {"name": "Fill with low quality", "command": "fill-low-quality"},
+        {"name": "👪 Fill with avatars/names (ai)", "command": "fill-ai"},
+        {
+            "name": "🪄 Fill with (ai)...",
+            "menu": [
+                {"name": "🧔‍♂️ Male", "command": "fill-male-ai"},
+                {"name": "👩 Female", "command": "fill-female-ai"},
+                {"name": "👱 Non-Binary", "command": "fill-non-binary-ai"}
+            ]
+        },
+        {"name": "🔖 Get a license (commerical)", "command": "license-ai"},
         {"separator": true},
         {
-            "name": "Fill with (filtered)",
+            "name": "💀 Deprecated (non-commerical)...",
             "menu": [
-                {"name": "Male", "command": "fill-male"},
-                {"name": "Female", "command": "fill-female"},
-                {"name": "Non-Binary", "command": "fill-non-binary"}
+                {"name": "Fill with high quality", "command": "fill-high-quality"},
+                {"name": "Fill with low quality", "command": "fill-low-quality"},
+                {
+                    "name": "Fill with...",
+                    "menu": [
+                        {"name": "Male", "command": "fill-male"},
+                        {"name": "Female", "command": "fill-female"},
+                        {"name": "Non-Binary", "command": "fill-non-binary"}
+                    ]
+                },
+                {"name": "License (non-commercial)", "command": "license"}
             ]
         }
     ]

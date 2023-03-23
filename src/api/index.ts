@@ -20,3 +20,21 @@ export async function fetchData(quality = 10, limit = 20, gender?: GenderType): 
         return Promise.reject();
     }
 }
+
+export async function fetchAIData(limit = 20, gender?: GenderType): Promise<Array<ItemType>> {
+    var url = `https://tinyfac.es/api/data-ai?limit=${limit}`;
+
+    if (gender) {
+        url = url + '&gender=' + gender;
+    }
+
+    const response = await fetch(url);
+
+    const items: JSONResponse = await response.json();
+
+    if (response.ok) {
+        return items;
+    } else {
+        return Promise.reject();
+    }
+}
