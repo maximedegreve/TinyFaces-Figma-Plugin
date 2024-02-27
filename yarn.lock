@@ -31,10 +31,10 @@
     lodash "^4.17.15"
     matrix-inverse "^1.0.1"
 
-"@figma/plugin-typings@^1.24.0":
-  version "1.28.0"
-  resolved "https://registry.npmjs.org/@figma/plugin-typings/-/plugin-typings-1.28.0.tgz#097cef09b02d44122a7b4405ce181f547f74ac98"
-  integrity sha512-Xypk+7LwbjkHVISRpN02jQbV0OvDMoIsuue/OKn5Hk7Bw3Dyxd3OjXfyzmV90p0CgpLtvEla2BsFqEfy6Xb3OA==
+"@figma/plugin-typings@*":
+  version "1.87.0"
+  resolved "https://registry.yarnpkg.com/@figma/plugin-typings/-/plugin-typings-1.87.0.tgz#bbce13f47d2c339b717b0a6856502317b6b7fb46"
+  integrity sha512-n/dZtw4G5J91mgi+OHZ8MpKkeFd5oRwIVZ8/Ju0BN+/LTcvj9lOPPDuCFBplS0lMBpcBYKn5eQxFuBpQv5t2lw==
 
 "@types/json-schema@^7.0.8":
   version "7.0.9"
