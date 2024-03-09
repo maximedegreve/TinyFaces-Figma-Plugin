@@ -6,7 +6,7 @@
     "ui": "dist/ui.html",
     "editorType": ["figma"],
     "documentAccess": "dynamic-page",
-    "networkAccess": {"allowedDomains": ["https://tinyfac.es"]},
+    "networkAccess": {"allowedDomains": ["https://tinyfac.es", "https://imagedelivery.net"]},
     "menu": [
         {"name": "👪 Fill with avatars/names (ai)", "command": "fill-ai"},
         {
